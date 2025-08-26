@@ -6,8 +6,9 @@
 #include <lua5.4/lauxlib.h>
 #include <lua5.4/lualib.h>
 #include <dirent.h>
+#include <linux/limits.h>
+#include <sys/stat.h>
 static lua_State *L = NULL;
-
 
 void lua_run_code(const char *code) {
     if (L == NULL) {
@@ -73,16 +74,39 @@ static int l_ls(lua_State *L) {
     }
 
     closedir(dir);
-    return 1;  // table döndür
+    return 1;  
 }
+static int l_pwd(lua_State *L){
+    char buf[PATH_MAX];
+    if (getcwd(buf,sizeof(buf)) != NULL)
+    {
+        lua_pushstring(L,buf);
+        return 1;
+    }
+    return luaL_error(L, "Can't get the current directory");
+}
+static int l_mkdir(lua_State *L){
+    const char *path = luaL_checkstring(L,1);
+    if (mkdir(path, 0777) == 0)
+    {
+        lua_pushboolean(L,1);
+        return 1;
+    }
+    lua_pushboolean(L,0);
+    return 1;
+}
+
+
 
 void register_shell_functions(lua_State *L) {
     lua_register(L, "cd", l_cd);
     lua_register(L, "ls", l_ls);
+    lua_register(L,"pwd",l_pwd);
+    lua_register(L,"mkdir",l_mkdir);
 }
 
 void lua_init(void) {
-    if (L != NULL) return; // Zaten init edilmişse tekrar yapma
+    if (L != NULL) return; 
     L = luaL_newstate();
     luaL_openlibs(L);
     register_shell_functions(L);

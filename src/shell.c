@@ -51,17 +51,17 @@ void shell_run(void)
 
         add_history(input);
 
-        // Exit kontrolü
+        // Exit Command
         if (strcmp(input, "exit") == 0)
         {
             free(input);
             break;
         }
 
-        // Komut parçalama
+        // Command Tokenizer
         size_t argc = shell_tokenize(input, args, MAX_ARGS);
 
-        // cd komutu
+        // cd Command
         if (strcmp(args[0], "cd") == 0)
         {
             if (argc < 2)
@@ -84,7 +84,6 @@ void shell_run(void)
             }
             else
             {
-                // Dosya adını al
                 const char *script_path = args[1];
                 lua_run_file(script_path);
             }

@@ -1,0 +1,60 @@
+{
+  "name": "lushell-script-support",
+  "displayName": "Lushell Script Support",
+  "description": "This extension provides support for Lushell scripts in Visual Studio Code. It includes syntax highlighting, code snippets, and other features to enhance your development experience with Lushell.",
+  "version": "0.0.1",
+  "publisher": "Bersis",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BersisSe/lushell"
+  },
+  "engines": {
+    "vscode": "^1.103.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "lushell-script-support.helloWorld",
+        "title": "Hello World"
+      },
+      {
+        "command": "lushell-script-support.setupLushellLSP",
+        "title": "Setup Lushell IntelliSense"
+      }
+    ],
+    "languages": [
+      {
+        "id": "lua",
+        "aliases": ["Lua"],
+        "extensions": [".lsh"]
+      }
+    ]
+  },
+  "extensionDependencies": [
+    "sumneko.lua"
+  ],
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/vscode": "1.102.0",
+    "@types/mocha": "10.0.10", 
+    "@types/node": "24.2.1",
+    "@typescript-eslint/eslint-plugin": "8.39.1",
+    "@typescript-eslint/parser": "^8.39.0",
+    "eslint": "9.33.0",
+    "typescript": "5.9.2",
+    "@vscode/test-cli": "0.0.11",
+    "@vscode/test-electron": "2.5.2"
+  }
+}
