@@ -1,6 +1,6 @@
 build/
 *.lua
-
+*.lsh
 lushell-script-support/node_modules/
 lushell-script-support/out/
 lushell-script-support/*.vsix

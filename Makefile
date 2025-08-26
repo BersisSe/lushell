@@ -28,10 +28,10 @@ install: $(TARGET)
 	@echo "[*] Copying config to $(USER_HOME)/.lushell"
 	mkdir -p $(USER_HOME)/.lushell
 	cp -r .lushell/* $(USER_HOME)/.lushell/
+	sudo chown -R $(shell logname):$(shell logname) $(USER_HOME)/.lushell
 	install -d /usr/local/bin
 	install $(TARGET) /usr/local/bin/lushell
 	@echo "[+] Installation complete!"
-
 uninstall:
 	@echo "[*] Removing binary..."
 	rm -f /usr/local/bin/lushell
